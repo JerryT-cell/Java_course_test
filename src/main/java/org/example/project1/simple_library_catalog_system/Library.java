@@ -1,9 +1,10 @@
-package org.example.simple_library_catalog_system;
+package org.example.project1.simple_library_catalog_system;
 
-public class Library {
+public class Library extends Institution {
     // Array to hold Book objects and an integer to track the current count of books
     private Book[] books;
     private int count;  // current number of books in the library
+
 
     // Constructor to initialize the array with a given capacity
     public Library(int capacity) {

@@ -1,5 +1,5 @@
-import org.example.simple_library_catalog_system.Book;
-import org.example.simple_library_catalog_system.Library;
+import org.example.project1.pc.Book;
+import org.example.project1.pc.Library;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,20 +29,23 @@ public class AdvancedLibraryTest {
         outContent.reset();
     }
 
+
+
     /**
      * Test that Book creation increases the static counter.
      */
     @Test
     public void testBookCreationAndStaticCounter() {
-        int initialCount = Book.getTotalBooksCreated();
+        //int initialCount = Book.getTotalBooksCreated();
         // Create several books.
         Book b1 = new Book("Test Book A", "Author A", 2021, "ISBN-A");
         Book b2 = new Book("Test Book B", "Author B", 2022, "ISBN-B");
         Book b3 = new Book("Test Book C", "Author C", 2023, "ISBN-C");
 
         // Validate that the static counter reflects all created books.
-        assertEquals(initialCount + 3, Book.getTotalBooksCreated(),
-                "Static counter should update after new Book creations.");
+        //assertEquals(initialCount + 3, Book.getTotalBooksCreated(),
+        //        "Static counter should update after new Book creations.");
+        fail();
     }
 
     /**
@@ -142,7 +145,7 @@ public class AdvancedLibraryTest {
                 "Removal should fail if the book does not exist.");
 
         String output = outContent.toString();
-        assertTrue(output.contains("not found"),
+        assertTrue((output.contains("not found")),
                 "Output should indicate that the book was not found.");
     }
 

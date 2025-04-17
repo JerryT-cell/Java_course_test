@@ -1,4 +1,4 @@
-package org.example.simple_library_catalog_system;
+package org.example.project1.simple_library_catalog_system;
 
 public class Book {
     // Private attributes for encapsulation
