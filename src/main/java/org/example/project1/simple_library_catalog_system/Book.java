@@ -10,14 +10,6 @@ public class Book {
     // A static field to track the total number of Book instances created
     private static int totalBooksCreated = 0;
 
-    // Constructor initializing all fields
-    public Book(String title, String author, int yearPublished, String isbn) {
-        this.title = title;
-        this.author = author;
-        this.yearPublished = yearPublished;
-        this.isbn = isbn;
-        totalBooksCreated++;
-    }
 
     // Getter and Setter for title
     public String getTitle() {

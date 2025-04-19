@@ -12,12 +12,19 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Create a scanner object to read user input
-        Scanner scanner = new Scanner(System.in); //don't touch !!!!!!!!
 
-        System.out.println("deposez l'argent dans la machine");
-        int montant = (int) getUser_double_Input(scanner);
-        System.out.println("You entered: " + montant);
+        Library library = new Library(3);
+
+        Library library1 = new Library(3);
+
+        if(library1.equals(library)) {
+            System.out.println("library and library1 are the same");
+        } else {
+            System.out.println("library and library1 are different");
+        }
+
+
+        Book b1 = new Book();
 
 
 

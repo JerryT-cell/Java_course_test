@@ -1,6 +1,8 @@
-import examinationTests.BookTest;
-import examinationTests.LibraryTest;
-import org.junit.platform.launcher.Launcher;
+package project1;
+
+import project1.examinationTests.BookTest;
+import project1.examinationTests.LibraryTest;
+import org.junit.platform.launcher.*;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;

@@ -1,5 +1,7 @@
 package org.example.project1.simple_library_catalog_system;
 
+import java.util.Arrays;
+
 public class Library extends Institution {
     // Array to hold Book objects and an integer to track the current count of books
     private Book[] books;
@@ -96,6 +98,14 @@ public class Library extends Institution {
             System.out.println("Found " + matchCount + " book(s) with title containing: " + title);
         }
         return foundBooks;
+    }
+
+
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Library library = (Library) obj;
+        return count == library.count;
     }
 
     // Getter to retrieve the current number of books in the library

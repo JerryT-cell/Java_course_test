@@ -1,4 +1,4 @@
-package examinationTests;
+package project1.examinationTests;
 
 import org.example.project1.nathan.*;
 import org.junit.jupiter.api.*;
