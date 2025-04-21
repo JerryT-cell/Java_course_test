@@ -57,6 +57,29 @@ class HospitalTest { // Inherit or include stream capture methods
         assertTrue(getOutput().contains(expectedOutput), "Output missing add confirmation for doctor");
     }
 
+
+    @Test
+    void testDuplicatePerson() throws Exception {
+        hospital.addPerson(patient1);
+        outContent.reset(); // Clear output buffer
+
+        assertThrows(Exception.class, () -> {
+            hospital.addPerson(patient1); // Attempt to add duplicate
+        });
+
+    }
+
+    @Test
+    void testDuplicatePersonDoctor() throws Exception {
+        hospital.addPerson(doctor1);
+        outContent.reset(); // Clear output buffer
+
+        assertThrows(Exception.class, () -> {
+            hospital.addPerson(doctor1); // Attempt to add duplicate
+        });
+
+    }
+
     @Test
     void testAddPersonThrowsExceptionAndDoesNotPrintWhenFull() throws Exception {
         smallHospital.addPerson(patient1); // Fills capacity of 1
@@ -93,8 +116,8 @@ class HospitalTest { // Inherit or include stream capture methods
     @Test
     void testListAllPersonsEmpty() {
         hospital.listAllPersons();
-        String expectedOutput = EOL + "--- Hospital Persons List ---"; // Check header even when empty
-        assertEquals(expectedOutput, getRawOutput().trim()); // Use raw output check if needed
+        String expectedOutput = EOL + "--- Hospital Persons List ---" + EOL; // Check header even when empty
+        assertEquals(expectedOutput, getRawOutput()); // Use raw output check if needed
     }
 
     @Test
@@ -140,8 +163,8 @@ class HospitalTest { // Inherit or include stream capture methods
     @Test
     void testListAppointmentsEmpty() {
         hospital.listAppointments();
-        String expectedOutput = EOL + "--- Hospital Appointments List ---";
-        assertEquals(expectedOutput, getRawOutput().trim());
+        String expectedOutput = EOL + "--- Hospital Appointments List ---" + EOL;
+        assertEquals(expectedOutput, getRawOutput());
     }
 
     @Test
@@ -163,9 +186,11 @@ class HospitalTest { // Inherit or include stream capture methods
 
     @Test
     void testSimulateDayEmpty() {
+        outContent.reset(); // Clear output buffer
         hospital.simulateDay();
-        String expectedOutput = EOL + "Simulating day in the hospital...";
-        assertEquals(expectedOutput, getRawOutput().trim());
+        String expectedOutput = EOL + "Simulating day in the hospital..." + EOL;
+        String out = getRawOutput();
+        assertEquals(expectedOutput, out);
     }
 
     @Test

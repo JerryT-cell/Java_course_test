@@ -8,6 +8,8 @@ public class Hospital {
     private Appointment[] appointments;
     private int appointmentCount;
 
+    private final static String EOL = System.lineSeparator(); // Platform independent newline
+
     // Constructor: specify capacity for persons and appointments
     public Hospital(int personCapacity, int appointmentCapacity) {
         persons = new Person[personCapacity];
@@ -25,6 +27,13 @@ public class Hospital {
             throw new Exception("Hospital capacity for persons reached!");
         }
         persons[personCount] = p;
+
+        for(int i = 0; i < personCount; i++) {
+            if (persons[i].getId().equals(p.getId())) {
+                throw new Exception("Person with ID " + p.getId() + " already exists!");
+            }
+        }
+
         personCount++;
         System.out.println("Added person: " + p.getDetails());
     }
@@ -46,7 +55,7 @@ public class Hospital {
      * Prints details of all persons registered in the hospital.
      */
     public void listAllPersons() {
-        System.out.println("\n--- Hospital Persons List ---");
+        System.out.println(EOL + "--- Hospital Persons List ---");
         for (int i = 0; i < personCount; i++) {
             System.out.println(persons[i].getDetails());
         }
@@ -68,7 +77,7 @@ public class Hospital {
      * Prints all scheduled appointments.
      */
     public void listAppointments() {
-        System.out.println("\n--- Hospital Appointments List ---");
+        System.out.println(EOL + "--- Hospital Appointments List ---");
         for (int i = 0; i < appointmentCount; i++) {
             System.out.println(appointments[i]);
         }
@@ -79,7 +88,7 @@ public class Hospital {
      * having the doctor diagnose the patient, and printing appointment details.
      */
     public void simulateDay() {
-        System.out.println("\nSimulating day in the hospital...");
+        System.out.println(EOL + "Simulating day in the hospital...");
         for (int i = 0; i < appointmentCount; i++) {
             Appointment appt = appointments[i];
             appt.getDoctor().diagnose(appt.getPatient());
@@ -100,7 +109,7 @@ public class Hospital {
                 numDoctors++;
             }
         }
-        System.out.println("\n--- Hospital Statistics ---");
+        System.out.println(EOL + "--- Hospital Statistics ---");
         System.out.println("Total Persons: " + hospital.personCount);
         System.out.println("Number of Patients: " + numPatients);
         System.out.println("Number of Doctors: " + numDoctors);
