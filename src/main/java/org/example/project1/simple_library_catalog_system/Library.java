@@ -2,7 +2,7 @@ package org.example.project1.simple_library_catalog_system;
 
 import java.util.Arrays;
 
-public class Library extends Institution {
+public class Library{
     // Array to hold Book objects and an integer to track the current count of books
     private Book[] books;
     private int count;  // current number of books in the library

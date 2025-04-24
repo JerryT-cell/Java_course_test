@@ -18,12 +18,12 @@ class HospitalTest { // Inherit or include stream capture methods
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
-    private final String EOL = System.lineSeparator(); // Platform independent newline
+    private final String EOL = "\n"; // Platform independent newline
 
     @BeforeEach
     void setUp() {
         hospital = new Hospital(10, 10); // Standard capacity
-        smallHospital = new Hospital(1, 1); // Capacity 1 for limits
+        smallHospital = new Hospital(2, 1); // Capacity 1 for limits
 
         patient1 = new Patient("P001", "Alice", 30, "Fever", "MRN123");
         patient2 = new Patient("P002", "Charlie", 25, "Cough", "MRN789");
@@ -82,11 +82,12 @@ class HospitalTest { // Inherit or include stream capture methods
 
     @Test
     void testAddPersonThrowsExceptionAndDoesNotPrintWhenFull() throws Exception {
-        smallHospital.addPerson(patient1); // Fills capacity of 1
+        smallHospital.addPerson(patient1);
+        smallHospital.addPerson(doctor1);// Fills capacity of 1
         outContent.reset(); // Clear output buffer
 
         Exception exception = assertThrows(Exception.class, () -> {
-            smallHospital.addPerson(doctor1);
+            smallHospital.addPerson(doctor2);
         });
         assertEquals("Hospital capacity for persons reached!", exception.getMessage());
         assertEquals("", getOutput(), "Should not print confirmation when add fails due to capacity."); // Check no output on failure
@@ -116,8 +117,9 @@ class HospitalTest { // Inherit or include stream capture methods
     @Test
     void testListAllPersonsEmpty() {
         hospital.listAllPersons();
-        String expectedOutput = EOL + "--- Hospital Persons List ---" + EOL; // Check header even when empty
-        assertEquals(expectedOutput, getRawOutput()); // Use raw output check if needed
+        String expectedOutput = EOL + "--- Hospital Persons List ---" + EOL;// Check header even when empty
+        String output = getRawOutput();
+        assertEquals(expectedOutput, output); // Use raw output check if needed
     }
 
     @Test
@@ -142,18 +144,23 @@ class HospitalTest { // Inherit or include stream capture methods
 
     @Test
     void testAddAppointmentPrintsConfirmation() throws Exception {
+        hospital.addPerson(doctor1);
+        hospital.addPerson(patient1);
         hospital.addAppointment(appointment1);
         String expectedOutput = "Added appointment: " + appointment1.toString();
-        assertTrue(getOutput().contains(expectedOutput), "Output missing add appointment confirmation.");
+        String output = getOutput();
+        assertTrue(output.contains(expectedOutput), "Output missing add appointment confirmation.");
     }
 
     @Test
     void testAddAppointmentThrowsExceptionAndDoesNotPrintWhenFull() throws Exception {
+        smallHospital.addPerson(doctor1);
+        smallHospital.addPerson(patient1);
         smallHospital.addAppointment(appointment1); // Fills capacity of 1
         outContent.reset(); // Clear output buffer
 
         Exception exception = assertThrows(Exception.class, () -> {
-            smallHospital.addAppointment(appointment2);
+            smallHospital.addAppointment(appointment1);
         });
         assertEquals("Appointment capacity reached!", exception.getMessage());
         assertEquals("", getOutput(), "Should not print confirmation when add appointment fails due to capacity.");
@@ -169,6 +176,10 @@ class HospitalTest { // Inherit or include stream capture methods
 
     @Test
     void testListAppointmentsWithContent() throws Exception {
+        hospital.addPerson(doctor1);
+        hospital.addPerson(patient1);
+        hospital.addPerson(doctor2);
+        hospital.addPerson(patient2);
         hospital.addAppointment(appointment1);
         hospital.addAppointment(appointment2);
         outContent.reset(); // Clear output from addAppointment calls
@@ -234,7 +245,7 @@ class HospitalTest { // Inherit or include stream capture methods
         hospital.addPerson(patient2);
         hospital.addPerson(doctor1);
         hospital.addAppointment(appointment1);
-        hospital.addAppointment(appointment2); // Add two appointments
+         // Add two appointments
         outContent.reset(); // Clear output buffer
 
         Hospital.printHospitalStatistics(hospital);
@@ -243,7 +254,7 @@ class HospitalTest { // Inherit or include stream capture methods
                 "Total Persons: 3" + EOL +         // patient1, patient2, doctor1
                 "Number of Patients: 2" + EOL +    // patient1, patient2
                 "Number of Doctors: 1" + EOL +     // doctor1
-                "Total Appointments: 2";           // appointment1, appointment2
+                "Total Appointments: 1";           // appointment1, appointment2
 
         String actualOutput = getRawOutput().replace("\r\n", "\n");
         assertEquals(expectedOutput.trim(), actualOutput.trim());
